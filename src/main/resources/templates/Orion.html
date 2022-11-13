@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+    <style>
+
+        body {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        p {
+            position: relative;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            font-size: 2em;
+            letter-spacing: 4px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #000, #fff, #000);
+            background-repeat: no-repeat;
+            background-size: 80%;
+            animation: animate 11s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0);
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: -500%;
+            }
+            100% {
+                background-position: 500%;
+            }
+        }
+        html { height: 100%; }
+        body {
+            margin: 0; /* Убираем отступы */
+            height: 100%; /* Высота страницы */
+            color: #fc0;
+            background: url("https://celes.club/uploads/posts/2022-10/1667004234_4-celes-club-p-chernii-kosmos-oboi-instagram-4.jpg");
+            /*background-color: #330099;!* Параметры фона *!*/
+            background-size: cover; /* Фон занимает всю доступную площадь */
+            height: auto;
+            max-width: 100%;
+        }
+
+        .glow-on-hover {
+            width: 220px;
+            height: 50px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left:-2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:active {
+            color: #000
+        }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .scale {
+            transition: 3s; /* Время эффекта */
+        }
+        .scale:hover {
+            transform: scale(1.05); /* Увеличиваем масштаб */
+        }
+
+        .item {
+            margin-left: 0px;
+        }
+
+        .photo {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .personPhoto {
+            border-radius: 50%;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            margin: 0%;
+            text-align: center;
+        }
+        .btn-hover {
+            width: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 5px;
+            height: 55px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 50px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-1 {
+            background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+        }
+        .btn-hover.color-2 {
+            background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        .btn-hover.color-3 {
+            background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+            box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+        }
+        .btn-hover.color-4 {
+            background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+            box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+        }
+        .btn-hover.color-5 {
+            background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+        }
+        .btn-hover.color-6 {
+            background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+            box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+        }
+        .btn-hover.color-7 {
+            background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+            box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+        }
+        .btn-hover.color-8 {
+            background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+            box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+        }
+        .btn-hover.color-9 {
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+        }
+        .btn-hover.color-10 {
+            background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+            box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+        }
+        .btn-hover.color-11 {
+            background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+        }
+
+        .gradient {
+
+            background: linear-gradient(to bottom right, #00008B, #000000);
+            padding: 10px;
+            text-align: center;
+            border: 0 solid #333;
+        }
+
+    </style>
+
+
+
+</head>
+
+
+<body >
+
+<body class="d-flex h-100 text-center">
+
+
+<main class="px-3">
+
+    <header th:insert="blocks/header :: header"></header>
+
+    <div class="container marketing" style="margin-top: 15px" >
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">The constellation Orion, is the most beautiful of all the observed constellations, is located quite high above the horizon and is clearly visible from December to March. This constellation is distinguished by the extraordinary brightness of the stars located in it and the size of the visible area. <span class="text-muted"> On a moonless and clear night from the earth, you can observe up to 120 stars of this constellation. Particularly noteworthy are the red Betelgeuse and the blue Rigel (these are stars of zero magnitude). Together with two more stars of the second magnitude, they form the geometric figure of the constellation Orion - a large irregular (elongated) quadrangle. In the middle of it are three stars of the second magnitude, forming the "belt" of Orion.
+</span></h2>
+                <p class="lead">In addition to them, in the constellation of Orion there are ten more stars brighter than the fourth magnitude. However, a great effort of the imagination is needed to see in this configuration of stars the legendary hunter Orion, who raised a huge club high with his right hand, with a lion's skin thrown over his left hand. On the right shoulder of Orion is the star Betelgeuse, and in the sole of his left foot is Rigel </p>
+            </div>
+            <div class="col-md-5">
+                <img alt="image1" src="https://img0.liveinternet.ru/images/attach/d/1/132/872/132872026_lignes_orion.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+                <img alt="image2" src="https://vistapointe.net/images/orion-9.jpg" class="scale" width="500px" height="400px"></div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> Betelgeuse is a supergiant, 400 times the diameter of the Sun. The distance from us to this supergiant star is 650 light years.
+
+                Rigel is a giant star, its radiation is 23,000 times stronger than that of the Sun. The distance from us to Rigel is 1076 light years. <span class="text-muted">        These are scientific facts, and now let's move on to the mention of this constellation in the ancient world, myths, annals and legends and its connection with the numerous pyramids, which are still amazing ancient structures..</span></h2>
+            <p class="lead"> The Hopi Indians believed in gods who came to Earth from the constellation Orion. The modern descendants of this tribe still believe that the gods lived on the star Pi-3 Orion. This planet is terrestrial and is located only 26 light years from earth, which, by scientific standards, is quite an acceptable distance for space travel. </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="https://www.howitworksdaily.com/wp-content/uploads/2015/12/Screen-Shot-2015-12-18-at-11.04.28.png" class="scale" width="500px" height="400px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1"> The Dogon tribe and the Egyptians also worshiped the gods from the constellation Orion, just like the Mayan tribe. <span class="text-muted"> The pyramids of Teotihuacan - the Sun (225 m at the base and 65 m in height) and the Moon (about 150 m at the base and 42 m in height) and the temple of the Mayan god himself - Quetzalcoatl, are located so that it is impossible not to notice their relationship to the stars in Orion's Belt. </span></h2>
+            <p class="lead">Less than half a mile south of the Pyramid of the Moon is the Pyramid of the Sun. With a height of over 200 feet (63 meters) and a base over 730 feet (225 meters) on each side, this pyramid is one of the largest structures built in the pre-Columbian New World. Construction was completed around 200 AD.</p>
+        </div>
+        <div class="col-md-5">
+
+            <img alt="image3" src="https://earth-chronicles.ru/Publications/10/1251745531_1.jpeg" class="scale" width="500px" height="400px"></div>
+
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> Particular importance was attached to this constellation in ancient Egypt. <span class="text-muted"> The god Osiris was identified with him - the lord of the kingdom of the dead and the great pyramids of the Giza Valley, as follows from the works of R. Bauval and G. Hancock, are nothing more than a projection of the three stars of the Orion belt at the lower point of the precessional movement, that is, in 10500. BC. </span></h2>
+            <p class="lead"> Osiris is not only the merciful judge of the dead in the afterlife, but also the agent of the underworld who granted life to all, including sprouting vegetation and the fertile flood of the Nile River. He is described as the "Lord of Love", "He Who is Ever Good and Young" and "Lord of Silence". The kings of Egypt were associated with Osiris in death - when Osiris rose from the dead, they, in union with him, would inherit eternal life through a process of imitation magic. During the era of the New Kingdom, it was believed that all people, not just the pharaohs, would be associated with Osiris after death if they incurred the costs of assimilation rituals. </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Orion_and_adjucent_constellations.png" class="scale" width="500px" height="400px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> The word Orion itself is translated as the guardian of the limit, border, etc.
+                <span class="text-muted"> The threshold role of Orion is also confirmed by the discovery of R. Bauval in the study of the astral cults of Ancient Egypt. Exploring the ventilation shafts of the great pyramid of Giza, Bauval came to the conclusion that they were precisely aimed at certain stars in the night sky, including Orion. But he went further, drawing attention to the specific topography of the placement of the three Great Pyramids on the surface of the Earth, and put forward his theory of their correlation with the three stars of Orion's belt. </span></h2>
+            <p class="lead"> Using the astronomical computer programs Sky Globe (Skysphere) and Red Shift (Redshift) it was possible to simulate the precession cycle in order to determine exactly when the stars of Orion corresponded to their pyramidal counterparts on Earth. It is quite possible to do this, since the interval of the precessional shift of the earth's axis relative to the celestial sphere has never changed over many thousands of years. Every 72 years there is a shift of 1 degree. Thus, for 2160 years the Sun is strictly in one constellation, gradually passing through all of them (a full circle of 12) in 25920 years. </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="https://3.bp.blogspot.com/-To5WRzGGPsk/ULBIOUsRPlI/AAAAAAAAAHg/Q_qyNSb_6ps/s1600/comarison-slide-of-three-orion-belt-pyramid-sites.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://geolines.ru/netcat_files/18/10/h_7111cfa8cb81768cfbe355f7e5605be1" class="scale" width="500px" height="400px"></div>
+
+    </div>
+    </div>
+
+    </div>
+
+</main>
+
+
+
+</main>
+</div>
+
+
+</body>
+
+</body>
+</html>

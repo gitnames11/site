@@ -1,0 +1,21 @@
+<div th:fragment="header">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+        <a href="https://i.pinimg.com/originals/cf/81/73/cf81734e3744eb42389116da91d8a608.jpg" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <h1 style="font-weight:bold;"><span style="color: #FF4500;" class="fs-4"> The Milky Way </span></h1>
+        </a>
+
+        <ul class="nav nav-pills">
+<!--            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page" style="margin: 0">Home</a></li>-->
+            <div class="buttons">
+<!--                <button class="btn-hover color-1">BUTTON</button>-->
+                <button onclick="window.location.href = '/';" class="btn-hover color-1" type="button">Home</button>
+                <button onclick="window.location.href = '/features';" class="btn-hover color-2" type="button">Features</button>
+                <button onclick="window.location.href = '/pricing';" class="btn-hover color-3" type="button">Pricing</button>
+                <button onclick="window.location.href = '/FAQs';" class="btn-hover color-4" type="button">FAQs</button>
+                <button onclick="window.location.href = '/about';" class="btn-hover color-5" type="button">About</button>
+            </div>
+        </ul>
+    </header>
+</div>

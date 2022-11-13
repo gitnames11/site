@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+    <style>
+
+        body {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        p {
+            position: relative;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            font-size: 2em;
+            letter-spacing: 4px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #000, #fff, #000);
+            background-repeat: no-repeat;
+            background-size: 80%;
+            animation: animate 11s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0);
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: -500%;
+            }
+            100% {
+                background-position: 500%;
+            }
+        }
+        html { height: 100%; }
+        body {
+            margin: 0; /* Убираем отступы */
+            height: 100%; /* Высота страницы */
+            color: #fc0;
+            background: url("https://celes.club/uploads/posts/2022-10/1667004229_16-celes-club-p-chernii-kosmos-oboi-instagram-21.jpg");
+            /*background-color: #330099;!* Параметры фона *!*/
+            background-size: cover; /* Фон занимает всю доступную площадь */
+            height: auto;
+            max-width: 100%;
+        }
+
+        .glow-on-hover {
+            width: 220px;
+            height: 50px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left:-2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:active {
+            color: #000
+        }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .scale {
+            transition: 3s; /* Время эффекта */
+        }
+        .scale:hover {
+            transform: scale(1.05); /* Увеличиваем масштаб */
+        }
+
+        .item {
+            margin-left: 0px;
+        }
+
+        .photo {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .personPhoto {
+            border-radius: 50%;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            margin: 0%;
+            text-align: center;
+        }
+        .btn-hover {
+            width: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 5px;
+            height: 55px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 50px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-1 {
+            background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+        }
+        .btn-hover.color-2 {
+            background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        .btn-hover.color-3 {
+            background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+            box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+        }
+        .btn-hover.color-4 {
+            background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+            box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+        }
+        .btn-hover.color-5 {
+            background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+        }
+        .btn-hover.color-6 {
+            background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+            box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+        }
+        .btn-hover.color-7 {
+            background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+            box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+        }
+        .btn-hover.color-8 {
+            background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+            box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+        }
+        .btn-hover.color-9 {
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+        }
+        .btn-hover.color-10 {
+            background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+            box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+        }
+        .btn-hover.color-11 {
+            background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+        }
+
+        .gradient {
+
+            background: linear-gradient(to bottom right, #00008B, #000000);
+            padding: 10px;
+            text-align: center;
+            border: 0 solid #333;
+        }
+
+
+    </style>
+
+
+
+</head>
+
+
+<body >
+
+<body class="d-flex h-100 text-center">
+
+
+<main class="px-3">
+
+    <header th:insert="blocks/header :: header"></header>
+
+    <div class="container marketing" style="margin-top: 15px" >
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">"The Fish model is a view of the solar system from the side of the stars Zeta-1 and Zeta-2 of the constellation Reticuli. One of the most prominent stars on map No. 82 of the constellation Epsilon Eridani is located exactly halfway between the Sun and the above pair. Fifteen stars on this maps are of the solar type, which means they can have habitable planets in orbit similar to Earth.Astronomers listen to such stars first of all with radio telescopes in the hope of receiving a message from alien intelligence.It is not surprising that these stars were connected by lines on the map of aliens - after all celestial navigation should logically exist between inhabited worlds"
+                    <span class="text-muted"> In principle, this whole story with Bety and Barney Hills could be taken as fiction, if not for indirect confirmation of the facts. It turns out that on September 19, a UFO was recorded by military radar (report No. 100-1-61) precisely over the area (Portsmouth, New Hampshire, USA) in which the Hills were located at that time. This radar observation was carried out by an operator at post 0214
+</span></h2>
+                <p class="lead">But another coincidence turned out to be no less mysterious. From the map built by Batty Hill, it was clear that routes were laid from the stars Zeta-1 and Zeta-2 not only to our Sun, but also to the famous stars Tau Ceti and Epsilon Eridani. And now, a curious fact for reflection, which UFO researcher Colonel V. Shelepov drew attention to</p>
+            </div>
+            <div class="col-md-5">
+                <img alt="image1" src="https://content.foto.my.mail.ru/mail/tomas.andersen.90/Vimana/h-128.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+                <img alt="image2" src="https://astronomy.com/~/media/images/bonus/Zeta/Zeta2.jpg" class="scale" width="500px" height="400px"></div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">On April 8, 1960, American radio astronomer Francis Drake of the National Radio Astronomy Observatory at Green Bank developed special equipment to search for artificial alien signals in the 21 cm wavelength range.
+                <span class="text-muted"> This project was then called Ozma. Drake chose the two closest stars to us, Epsilon Eridani and Tau Ceti, from the constellation Seti (Reticuli), which are about 11 light-years away from the Sun, as the first candidates from which to expect artificial radio emission signals.</span></h2>
+            <p class="lead">On this occasion, Colonel Shelepov writes: </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="http://alligater.my1.ru/_fr/4/6016680.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1"> “April 8, 1960, that is, even before the incident with the Hill spouses, listening to these stars at a wavelength of 21 cm was started. No signals were found from Tau Ceti, and the antenna was transferred to Epsilon Eridani. And almost immediately, the recorders recorded signals of obviously artificial origin <span class="text-muted"> "They stopped soon and were recaptured two weeks later. At the same time, they were received by the Naval Laboratory. According to the investigators, the signals did not come from Epsilon, but from some closer source. What? The Pentagon said something about a top-secret military object, but few believed in these explanations" </span></h2>
+            <p class="lead">So it turns out that the American astronomer Francis Drake, a little more than a year and a half before the incident with the Hills, accurately identified from the variety of different stars, to search for intelligent signals, two stars (Tau Ceti and Epsilon Eridani), which, as we know, were marked transport expeditionary highways on a star map built according to Betty Hill. Is this a coincidence, or could someone else know about these things earlier in the depths of secret closed departments? We will try to answer these riddles in this work. But first, let's look at some interesting materials.</p>
+        </div>
+        <div class="col-md-5">
+
+            <img alt="image3" src="https://www.lecturatarot.com/blog/wp-content/uploads/2014/05/VZK8Kc.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://sun9-66.userapi.com/impf/RObrAL2rO9g6Uv4AHWcnLQ8OvapqOs9vDY-R8Q/LB02cHiGj58.jpg?size=604x340&quality=96&sign=b789c2aed85704420a2056f468d77316&type=album" class="scale" width="500px" height="400px"></div>
+
+
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> Ufologist and producer of the HBO channel Linda Moulton Howe (USA) was involved in the secret military departments in order to shoot a documentary film dedicated to UFOs. Her previous well-made documentary-thinking was devoted to the mysterious injury and death of animals (collection of various organs, endocrine glands, complete lack of blood in animals) as a result of the activities of UFO pilots (the film was called "The Devil's Harvest"). This documentary film was shown by me at the 2nd All-Union Scientific UFO Conference in Moscow in October 1991 in order to draw the attention of ufologists to this serious problem in our country. Negotiations for a new UFO documentary with Linda took place from 1983 to 1984 and were conducted by Richard Doty (CIA) of the Federal Office for Special Investigations. <span class="text-muted"> LV-426
+Initially, the planet was a cold storm world, with an atmosphere of a mixture of nitrogen with methane, carbon dioxide and ammonia. However, in the second part of the film, it is said that the planet has undergone terraforming. This was to give her an atmosphere and climate compatible with human life. The planet itself was apparently devoid of life of its own. Xenomorph eggs were found in an abandoned starship belonging to some mysterious alien civilization. </span></h2>
+            <p class="lead"> By the way, the Reticulans showed themselves noticeably in 1978 in South Carolina (USA). Contactee Bill Hermann allegedly made contact about four times with alleged aliens who arrived from the Zeta Reticuli (Zeta Reticuli) system. Moreover, the aliens allegedly told Hermann that in 1961 they had already made contact with a married couple, which attracted the attention of many people and the press (obviously talking about Barney and Betty Hill) </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="http://www.solstation.com/stars2/zetafish2.gif" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://www.scified.com/u/Prometheus_Destination.png" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://club-astronomie.org/atlas/Gravures/Taureau.jpg" class="scale" width="500px" height="400px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> When scientists first recorded a signal from the planet Gliese 581d, they did not attach much importance to it. Then the existence of her own was under a big question, numerous discussions were held on this subject. Some astronomers still consider the signals to be a simple manifestation of stellar activity, but increased, because otherwise they would not be able to reach the solar system. In 2014, American scientists repeatedly tested the characteristics of the received signal. They did not find any evidence that it is fed artificially. Astronomers suggest that it is the result of light and magnetic radiation propagated by a red dwarf. When crossing, they gather, creating a special cosmic noise that could not be caught before. On March 7 this year, it became known that the signal from the potentially habitable planet Gliese 581d is not the result of cosmic noise. It repeats every few months, has a similar cycle.
+                <span class="text-muted"> In 2014, attempts to confirm the existence of Gliese 581d were made by astronomers at the University of Pennsylvania. Calculations were carried out that refuted the information of Stefan Oudry. According to them, the recorded phenomena are only a consequence of stellar activity.? </span></h2>
+            <p class="lead"> “We were shocked to decipher part of the message,” writes John Steven, “it feels like all civilizations in the universe are following the same path of war and violence. Unfortunately, our government has banned the publication of this discovery, but we do so at our own peril and risk. In the future, we will publish detailed data on the creatures that inhabited Gliese 581 d. </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="http://4.bp.blogspot.com/-Hh3AuGKi6hU/Uc2PBcHlyOI/AAAAAAAAJKs/bXcmwsbO9GU/s1129/Gliese_667_system.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://www.infox.ru/upload/59261/orbit_comparison_h.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://image3.slideserve.com/5833618/slide32-l.jpg" class="scale" width="500px" height="400px"></div>
+
+    </div>
+    </div>
+
+    </div>
+
+</main>
+
+
+
+</main>
+</div>
+
+
+</body>
+
+</body>
+</html>

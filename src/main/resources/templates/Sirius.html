@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        p {
+            position: relative;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            font-size: 2em;
+            letter-spacing: 4px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #000, #fff, #000);
+            background-repeat: no-repeat;
+            background-size: 80%;
+            animation: animate 11s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0);
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: -500%;
+            }
+            100% {
+                background-position: 500%;
+            }
+        }
+
+        html { height: 100%; }
+        body {
+            margin: 0; /* Убираем отступы */
+            height: 100%; /* Высота страницы */
+            color: #fc0;
+            background: url("https://celes.club/uploads/posts/2022-10/1667004274_39-celes-club-p-chernii-kosmos-oboi-instagram-48.jpg");
+            /*background-color: #330099;!* Параметры фона *!*/
+            background-size: cover; /* Фон занимает всю доступную площадь */
+            height: auto;
+            max-width: 100%;
+        }
+
+        .glow-on-hover {
+            width: 220px;
+            height: 50px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left:-2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:active {
+            color: #000
+        }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .scale {
+            transition: 3s; /* Время эффекта */
+        }
+        .scale:hover {
+            transform: scale(1.05); /* Увеличиваем масштаб */
+        }
+
+        .item {
+            margin-left: 0px;
+        }
+
+        .photo {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .personPhoto {
+            border-radius: 50%;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            margin: 0%;
+            text-align: center;
+        }
+        .btn-hover {
+            width: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 5px;
+            height: 55px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 50px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-1 {
+            background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+        }
+        .btn-hover.color-2 {
+            background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        .btn-hover.color-3 {
+            background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+            box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+        }
+        .btn-hover.color-4 {
+            background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+            box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+        }
+        .btn-hover.color-5 {
+            background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+        }
+        .btn-hover.color-6 {
+            background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+            box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+        }
+        .btn-hover.color-7 {
+            background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+            box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+        }
+        .btn-hover.color-8 {
+            background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+            box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+        }
+        .btn-hover.color-9 {
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+        }
+        .btn-hover.color-10 {
+            background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+            box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+        }
+        .btn-hover.color-11 {
+            background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+        }
+
+        .gradient {
+
+            background: linear-gradient(to bottom right, #00008B, #000000);
+            padding: 10px;
+            text-align: center;
+            border: 0 solid #333;
+        }
+
+    </style>
+
+
+
+</head>
+
+
+<body >
+
+<body class="d-flex h-100 text-center">
+
+
+<main class="px-3">
+
+    <header th:insert="blocks/header :: header"></header>
+
+    <div class="container marketing" style="margin-top: 15px" >
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">Information about Sirius was collected in 1946-1950. among four African peoples: the Dogon in Bandiagara, the Bambara and Bozo in Segou, and the Minianka in Koutiala. Managed to find out.
+                    <span class="text-muted"> Sirius as a "pillar of the world" is of great importance in the life of the Dogon, who associate their most important holiday Sigi (ceremony) with it. This is a ritual of incrementing the world, once every 60 years. Speaking about the calculation of Sigi's terms by the Dogon, M. Griol and J. Dieterlen write:
+</span></h2>
+                <p class="lead">“They are just duplicating an alternative, more complex practice and are aware of the Sirius system. The Dogon call this star—sigi/polo (Sigi's star), or yashigi tolo (Yashigi's star)—which is well-dwelled by its association with the world renewal ceremony, which has been taking place for about 60 years. However, is not an important role of this system. Arow arrays representing this trajectory, which is depicted horizontally: the oval contains a small circle on the left - Sirius (S), above the spans of another circle (DP) with a spot in the center of the Digitar's span at a minimum distance. At the other end of the oval, the small cluster of dots (DL) represents the star when it is farthest from Sirius. When Digitaria is close to Sirius, the latter becomes brighter; when it is furthest away from Sirius, the Digitaria flickers, an impression of the stars is observed in the observer... and this rotation is honored by the bado ritual.</p>
+            </div>
+            <div class="col-md-5">
+                <img alt="image1" src="https://img1.liveinternet.ru/images/attach/c/3/75/88/75088507_canis_major.gif" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+                <img alt="image2" src="https://i.pinimg.com/originals/f2/76/92/f27692cf912ce7a2f9fa87af53a3d658.jpg" class="scale" width="500px" height="400px"></div>
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> The Sirius system is one of the closest to us. It is only 8.6 light years away, or twice as far as the nearest star, Alpha Centauri. Actually, Sirius itself (Sirius A) is 2.1 times more massive than our Sun and 1.7 times its diameter. But it emits 21.6 times more visible light than the Sun. This is due to the higher temperature of the visible surface of the star, which reaches 9700 degrees Celsius. There are noticeably more metals on Sirius than on the Sun.
+                <span class="text-muted"> From the Atlanteans the world received not only a legacy of decorative arts, philosophies and sciences, ethics and religions, but also a legacy of hatred, strife and perversion. The Atlanteans provoked the first war; and it has been said that all subsequent wars have been fought in a fruitless attempt to justify the first and correct the wrong it caused.</span></h2>
+            <p class="lead"> Before Atlantis sank, its spiritually enlightened Initiates, who realized that their land was doomed as it retreated from the Path of Light, left the ill-fated continent. Carrying with them a sacred and secret teaching, these Atlanteans settled in Egypt, where they became its first "divine" rulers. Almost all the great cosmological myths that form the basis of the various sacred books of the world are based on the rituals of the Atlantean Mystery. </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="https://cont.ws/uploads/pic/2017/7/12264041_f3ee0d0.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://futurenow.ru/wp-content/uploads/2020/06/interstellar-message-2030.jpg" class="scale" width="500px" height="400px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1"> “The Trismegistic treatise The Virgin of the World from Egypt refers to the “Black Rite” associated with the “black” Osiris as the highest degree of secret initiation possible in the ancient Egyptian religion - this is the ultimate secret of the Mystery of Isis. <span class="text-muted"> This treatise says that Hermes came to Earth to teach civilization to the people, and then "ascended the stars" again, returning to his home and leaving behind the mysterious religion of Egypt with its heavenly mysteries that were someday decoded" </span></h2>
+            <p class="lead">Among the souls incarnated on earth today, there is also a separate article - Others, which we will consider here:</p>
+        </div>
+        <div class="col-md-5">
+
+            <img alt="image3" src="https://www.rgo.ru/sites/default/files/media/2020-02-06/nut3_ramesesvi_blizhe_k_uygurskoy_idee.jpg" class="scale" width="500px" height="400px"></div>
+
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> In Masonic lodges, Sirius is known as the "Flaming Star", and a simple look at his prominent role in Masonic symbolism reveals his exceptional importance. The Masonic author William Hutchinson wrote of Sirius: "It is the first and most sublime object that demands our attention in the Lodge." Just as the light of Sirius made its way into the Great Pyramid during initiations, it is symbolically present in Masonic lodges. <span class="text-muted"> “Ancient astronomers saw all the great symbols of Freemasonry in the stars. Sirius shines in our houses like a Blazing Star. </span></h2>
+            <p class="lead"> “The Blazing Star originally represented SIRIUS, or the Dog Star, the precursor to the flood of the Nile; God Anubis, companion of ISIS in her search for the body of Osiris, her brother and husband. Then he became the image of HORUS, the son of OSIRIS, who was also symbolized by the Sun, the author of the seasons and the God of time; The son of ISIS, who was the universal nature, the primitive material itself, the inexhaustible source of Life, the spark of uncreated fire, the universal seed of all beings. It was also HERMES, the master of learning, whose name in Greek is that of the God Mercury." </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="https://www.truthcontrol.com/files/truthcontrol/images/dog%20star%20shamesh%20scythe.jpg" class="scale" width="500px" height="400px"></div>
+    </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1"> c - who are the others?
+
+                o - others - these are those who came with dual functions and for whom it is important to make a choice in this incarnation, to be on the side of darkness or light, or choose the third path, these are the beings who came precisely for such an exam, and for such programs and tasks .
+
+                c — what does the third way imply?
+
+                o - exit into unity and its management, not just exit into unity, but precisely into a conscious exit, and management of this unity in the form of a fractal of the creator, in his form and tasks.
+
+                c — how many of them today are aware of themselves as such?
+                <span class="text-muted"> about - forty percent, vaguely aware for some reason, and in full measure, fifteen percent are approximately ... aware to a greater extent ...
+
+c - and their approximate number?
+
+o — this is research, it’s more like parallel functions of the planet’s development, it doesn’t interfere, it’s built into the general ascension plan and it’s agreed by all parties… it’s like in a huge organization, there is some kind of small project that is being carried out like this. There are no disagreements anywhere, everywhere everything is coordinated and supervised by all parties, and with sufficient freedom. Several races and types of creatures are working, that is, here on the planet several nationalities are also working on one, some interesting question.
+
+c — and what will happen if they are determined, for example, in the direction of darkness? </span></h2>
+            <p class="lead"> inspect and compare, so that we can explain it to you more clearly, we will draw analogies with your scientific experiments and laboratories. See what conditions your scientists create for a bacterium or a species or an animal. There are several types of incubators, where different conditions and habitats are created, different observations are made, experiments are carried out, and everything is analyzed, and everything is recorded, and for each world its own conclusion and experience is selected. They say that if this experience is not needed for the earth, this does not mean that it will be rejected and not accepted, in some other world suitable for this outcome.
+
+                c — and yet, what will happen if they take the path of darkness — i.e. destruction, in our particular case?
+
+                oh - we are too small to contemplate this, we are doing our task, we are not carried away by such global issues. We have a work site, we study, we do, we create and we are happy about it. We trust the Creator and pass everything along the ray of attention, there for consideration by all the higher ones.
+
+                in - and we - who are we?
+
+                oh - we are a union: Sirius, Aldebaran and Vega ... </p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img alt="image3" src="http://2.bp.blogspot.com/-PQ-FS7N4dQY/VZxF690EJdI/AAAAAAAAKwg/q1tzfEURE80/s1600/2882439.jpg" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+            <img alt="image3" src="https://cont.ws/uploads/pic/2020/6/scale_1200%20-%202020-06-25T044651.451.webp" class="scale" width="500px" height="400px" style="margin-bottom: 10px">
+        <img alt="image3" src="https://i.pinimg.com/originals/14/37/8c/14378c3507aedd79c0794af5b61fc015.jpg" class="scale" width="500px" height="400px"></div>
+
+    </div>
+    </div>
+
+    </div>
+
+</main>
+
+
+
+</main>
+</div>
+
+
+</body>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+    <style>
+        html { height: 100%; }
+        body {
+            margin: 0; /* Убираем отступы */
+            height: 100%; /* Высота страницы */
+            color: #fc0;
+            background: url("https://celes.club/uploads/posts/2022-10/1667004222_46-celes-club-p-chernii-kosmos-oboi-instagram-55.jpg");
+            /*background-color: #330099;!* Параметры фона *!*/
+            background-size: cover; /* Фон занимает всю доступную площадь */
+            height: auto;
+            max-width: 100%;
+        }
+
+        .glow-on-hover {
+            width: 220px;
+            height: 50px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left:-2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:active {
+            color: #000
+        }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .scale {
+            transition: 3s; /* Время эффекта */
+        }
+        .scale:hover {
+            transform: scale(1.05); /* Увеличиваем масштаб */
+        }
+
+        .item {
+            margin-left: 0px;
+        }
+
+        .photo {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .personPhoto {
+            border-radius: 50%;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            margin: 0%;
+            text-align: center;
+        }
+        .btn-hover {
+            width: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 5px;
+            height: 55px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 50px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-1 {
+            background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+        }
+        .btn-hover.color-2 {
+            background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        .btn-hover.color-3 {
+            background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+            box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+        }
+        .btn-hover.color-4 {
+            background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+            box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+        }
+        .btn-hover.color-5 {
+            background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+        }
+        .btn-hover.color-6 {
+            background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+            box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+        }
+        .btn-hover.color-7 {
+            background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+            box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+        }
+        .btn-hover.color-8 {
+            background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+            box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+        }
+        .btn-hover.color-9 {
+            background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+            box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+        }
+        .btn-hover.color-10 {
+            background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+            box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+        }
+        .btn-hover.color-11 {
+            background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+        }
+
+        .gradient {
+
+            background: linear-gradient(to bottom right, #00008B, #000000);
+            padding: 10px;
+            text-align: center;
+            border: 0 solid #333;
+        }
+
+    </style>
+
+
+
+</head>
+
+
+<body >
+
+<body class="d-flex h-100 text-center">
+
+
+<main class="px-3">
+
+    <header th:insert="blocks/header :: header"></header>
+
+    <div class="container marketing" style="margin-top: 15px" >
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-4">
+                <article class="item">
+                    <div class="photo">
+                        <img class="personPhoto" alt="" src="http://fer3.com/arc/imgx/Orion3-Orion-Std-View.jpg"></div>
+                </article>
+                <h2 class="fw-normal"><b style="color: #FF4500">Orion</b></h2>
+                <p style="font-style:oblique"><strong>Freemasons are the direct heirs of the Templar Order</strong></p>
+                <p><a class="btn btn-secondary" href="/Orion">View details »</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <article class="item">
+                    <div class="photo">
+                        <img class="personPhoto" alt="" src="https://img.haikudeck.com/mg/Lt5przkuGT_1393960767953.jpg">
+                    </div>
+                </article>
+                <h2 class="fw-normal"><b style="color: #FF4500">Sirius</b></h2>
+                <p style="font-style:oblique"><strong>The pyramid of Menkaur, the pyramid of Khafra, the pyramid of Khufu - All of them were erected before the flood</strong></p>
+                <p><a class="btn btn-secondary" href="/Sirius">View details »</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <article class="item">
+                    <div class="photo">
+                        <img class="personPhoto" alt="" src="https://mysteriesrunsolved.com/wp-content/uploads/2022/07/AlienMap.jpeg">                    </div>
+                </article>
+                <h2 class="fw-normal"><b style="color: #FF4500">Zeta</b></h2>
+                <p style="font-style:oblique"><strong>Fifteen stars belong to the solar type, have habitable planets in orbit</strong></p>
+                <p><a class="btn btn-secondary" href="/Zeta">View details »</a></p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">We have just observed the visible limit of our universe. But this does not mean that this is the edge of the universe. The universe could be much larger. Extremely acute occurrence occurs only because it takes time for light to reach us from distant galaxies. <span class="text-muted">This galaxy looks like it did "only" a few hundred million years after the big bang (beginning of the universe). This galaxy was barely formed, and its first generation of stars was fading away.</span></h2>
+                <p class="lead">Many galaxies are too far away for light to reach us. In fact, we will never see light from more distant galaxies because the universe is expanding too fast.</p>
+            </div>
+            <div class="col-md-5">
+                        <img alt="image1" src="https://i.pinimg.com/originals/cf/81/73/cf81734e3744eb42389116da91d8a608.jpg" class="scale" width="500px" height="400px"></div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading fw-normal lh-1">HUMANITY has made great strides in exploring the great mysteries of the cosmos. We have observed the afterglow of the big bang, spying on galaxies so far away that we see them as they were when the universe was a baby, tracking distant supernova explosions, and penetrating to the very edge of a black hole. <span class="text-muted">However, one corner of the cosmos has proved resistant to our attempts to deal with it: the part we call home, the Milky Way.</span></h2>
+                <p class="lead">With the Milky Way, we are inside what we are trying to observe. We can only dream of flying out of our galaxy in a spaceship to see a different perspective. Therefore, we must be content with our view from an insignificant blue spot orbiting one star out of many billions in a vast agglomeration of stellar neighborhoods.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                        <img alt="image2" src="https://i.pinimg.com/originals/6e/a2/64/6ea26407aba42f686621bdf6af94867f.jpg" class="scale" width="500px" height="400px"></div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading fw-normal lh-1">To study our galaxy, theorists are creating models of how these different particles interact with magnetic fields in different places and with different strengths. Astronomers can then compare these models with actual observations made at radio, infrared, optical, ultraviolet and X-ray wavelengths to see how well they fit the data. The LAT will provide vital data that will allow theorists to limit and improve their models. <span class="text-muted">Image of the Milky Way Image on the right: An artist's concept of the Milky Way galaxy. GLAST will provide detailed information on where stars form. Credit: NASA JPL</span></h2>
+                <p class="lead">For example, the EGRET instrument at NASA's Compton Gamma Observatory has found hints that there may be gas pockets in our galaxy that are invisible to radio telescopes. Brief observations of the galactic plane should help astronomers determine whether these clusters are real or not. They can also reveal changes in the interstellar medium due to recent supernova explosions.</p>
+            </div>
+            <div class="col-md-5">
+
+                <img alt="image3" src="http://www.projectrho.com/public_html/starmaps/media/winchposter/winchgalmap3Sample.jpg" class="scale" width="500px" height="400px"></div>
+
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- /END THE FEATURETTES -->
+
+    </div>
+
+    <h1 style="color: #FF4500;">Magic button</h1>
+    <p class="lead">
+        <button onclick="window.location.href = '/main-home';" class="glow-on-hover" type="button"  style="color: #fc0;">Learn more</button>
+    </p>
+    <div th:insert="blocks/footer :: footer"></div>
+</main>
+
+
+
+</main>
+</div>
+
+
+</body>
+
+</body>
+</html>
